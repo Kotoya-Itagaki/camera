@@ -25,8 +25,8 @@ def main(controller):
     try:
         config = configparser.ConfigParser()
         config.read('./config.ini')
-        location = config['DEFAULT']['location']
-        rec_time = config['DEFAULT']['rec_time']
+        location = config.get('DEFAULT', 'location')
+        rec_time = config.getint('DEFAULT', 'rec_time_sec')
 
     except FileNotFoundError:
         raise
@@ -44,8 +44,7 @@ def main(controller):
 
     while(True):
         # ディスプレイにカメラから取得した画像を表示
-        frame = camera.frame
-        cv2.imshow(location, frame)
+        cv2.imshow(location, camera.frame)
 
         # 動画を作成
         if controller.rec_start_order:
