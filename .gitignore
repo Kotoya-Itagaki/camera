@@ -1,2 +1,11 @@
 # config_file
 *.ini
+
+# log_file
+logs/*
+
+# VSCode
+.vscode/*
+
+# pycache
+__pycache__/*
