@@ -20,14 +20,16 @@ class Handler(BaseHTTPRequestHandler):
         # statusがstart
         if requestBody.get('status') == 'start':
             print('start')
-            self.controller.rec_start_order()
+            rec_state = self.controller.rec_start_order()
+            self.send_response(200)
 
         # statusがend
         if requestBody.get('status') == 'end':
             print('end')
-            self.controller.rec_stop_order()
+            rec_state = self.controller.rec_stop_order()
 
-        self.send_response(200)
+            self.send_response(200)
+
         self.end_headers()
 
 

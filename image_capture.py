@@ -20,8 +20,7 @@ class Image_Capture:
         self.snapshot_dir = './snapshot'
 
         # snapshotフォルダの作成
-        if not os.path.exists(self.snapshot_dir):
-            os.mkdir(self.snapshot_dir)
+        os.makedirs(self.snapshot_dir, exist_ok=True)
 
         # 設定ファイル読み込み
         try:
@@ -40,9 +39,7 @@ class Image_Capture:
         self.camera = Camera(config)
 
     def rec_start(self):
-        log.info('=====================================')
         log.info('=============== START ===============')
-        log.info('=====================================')
 
         self.is_recording = True
         recorder = threading.Thread(target=self.recording)
