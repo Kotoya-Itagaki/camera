@@ -1,4 +1,5 @@
 import datetime as dt
+import os
 import threading
 import time
 
@@ -10,7 +11,7 @@ from camera_image import Camera
 class VideoWriter:
     """動画を作成するクラス"""
 
-    def __init__(self, camera: Camera, codec, config):
+    def __init__(self, camera: Camera, codec, write_fps, read_width, read_height):
         """
         args:
             camera(Camera): カメラのインスタンス
@@ -19,18 +20,19 @@ class VideoWriter:
         """
         self.camera = camera
         self.codec = codec
-        self.write_fps = config.getint('DEFAULT', 'write_fps')
-        self.read_width = config.getint('DEFAULT', 'read_width')
-        self.read_height = config.getint('DEFAULT', 'read_height')
-        self.save_video_dir = './video'
+        self.write_fps = write_fps
+        self.read_width = read_width
+        self.read_height = read_height
         self.video = None
         self.is_writing = False
+        self.save_video_dir = './video'
+        os.makedirs(self.save_video_dir, exist_ok=True)
 
     def _get_file_name(self):
         """ファイル名を取得する"""
 
         start_time = dt.datetime.now()
-        return f"{self.save_video_dir}/{start_time.strftime('%Y%m%d_%H%M%S%f')[:-3]}.mp4"
+        return f"{self.save_video_dir}/{start_time.strftime('%Y%m%d_%H%M%S')}.mp4"
 
     def create(self):
         """動画を作成する"""
